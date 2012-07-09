@@ -2,7 +2,7 @@
     "name": "buster-coverage",
     "version": "0.1.0",
     "description": "Generate lcov data files from Buster.JS",
-    "homepage": "http://busterjs.org/docs/buster-coverage",
+    "homepage": "https://github.com/ebi/buster-coverage",
     "author": { "name": "Tobias Ebnöther" },
     "contributors": [{
         "name": "Tobias Ebnöther",
@@ -12,11 +12,10 @@
     "main": "./lib/buster-coverage",
     "repository": {
         "type": "git",
-        "url": "git://gitorious.org/~ebi/buster-coverage.git"
+        "url": "git://github.com/ebi/buster-coverage.git"
     },
     "dependencies": {
-        "coverage-helpers": ">=0.1",
-        "buster": ">=0.5.0"
+        "coverage-helpers": "git://github.com/ebi/coverage-helpers.git"
     }
 }
 

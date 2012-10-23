@@ -25,12 +25,15 @@ Then add it to your `buster.js` config file:
 
 By default it will write everything into the `coverage` subdirectory.
 
-### Change output directory
+### Example Configuration
 
     config["My tests"] = {
       extensions: [ require("buster-coverage") ],
       "buster-coverage": {
-        outputDirectory: "coverage_reports"
+        outputDirectory: "coverage_reports", //Write to this directory instead of coverage
+        format: "cobertura", //At the moment cobertura and lcov are the only ones available
+        combinedResultsOnly: true, //Write one combined file instead of one for each browser
+        coverageExclusions: "resources" //Exclude everything with resources in it's path
       }
     };
 

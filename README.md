@@ -33,7 +33,7 @@ By default it will write everything into the `coverage` subdirectory.
         outputDirectory: "coverage_reports", //Write to this directory instead of coverage
         format: "cobertura", //At the moment cobertura and lcov are the only ones available
         combinedResultsOnly: true, //Write one combined file instead of one for each browser
-        coverageExclusions: "resources" //Exclude everything with resources in it's path
+        coverageExclusions: ["resources"] //Exclude everything with resources in it's path
       }
     };
 

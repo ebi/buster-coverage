@@ -1,10 +1,16 @@
 var buster = require("buster");
 var resources = require("buster-resources");
 var extension = require("../lib/buster-coverage");
+var coverageHelpers = require("coverage-helpers");
+var sinon = require("buster-sinon");
+var testRunner = buster.testRunner;
+var testCase = buster.testCase;
+var when = require("when");
 
 buster.testCase("buster-coverage extension", {
     setUp: function () {
         this.config = buster.eventEmitter.create();
+        this.config.isModulePattern = true;
         this.resourceSet = resources.resourceSet.create();
 
         this.resourceSet.addResource({
@@ -55,7 +61,7 @@ buster.testCase("buster-coverage extension", {
             assert.isFalse(resource.hasProcessors());
         });
 
-        this.config.emit("load:sources", this.resourceSet);
+        this.config.emit("load:resourcesConfig", this.resourceSet);
 
         this.resourceSet.forEach(function (resource) {
             assert.isTrue(resource.hasProcessors());
@@ -74,7 +80,7 @@ buster.testCase("buster-coverage extension", {
         this.resourceSet.loadPath.append("/src/module/templates/bar.html");
 
         extension.configure(this.config);
-        this.config.emit("load:sources", this.resourceSet);
+        this.config.emit("load:resourcesConfig", this.resourceSet);
 
         var resource = this.resourceSet.get("/src/module/templates/bar.html");
         resource.process().then(function (processor_content) {
@@ -87,14 +93,40 @@ buster.testCase("buster-coverage extension", {
 
     },
 
-    "ensure processor for instrumenting runs on /src/foo.js": function () {
+    "//ensure processor for instrumenting runs on /src/foo.js": function () {
         extension.configure(this.config);
-        this.config.emit("load:sources", this.resourceSet);
+        this.config.emit("load:resourcesConfig", this.resourceSet);
 
         this.resourceSet.get("/src/foo.js")
             .process().then(function (processorContent) {
                 assert.match(processorContent, '/src/foo.js", 1);');
             });
+    },
+
+    "//ensure runTest gets proper instrumented feedback for testRunner callbacks": function () {
+        this.config.fs = this.stub();
+        this.config.fs.writeFileSync = function () { return this.spy; };
+        extension = extension.create(this.config);
+        extension.configure(this.config);
+
+        var foo = this.config.emit("load:resourcesConfig", this.resourceSet);
+
+
+        var resource = this.resourceSet.get("/src/foo.js");
+
+        var runner = testRunner.create();
+        var testFn = this.spy();
+        var context = testCase("Test", { test: testFn });
+
+
+
+        extension.testRun(runner, this.spy());
+        var clientSpy = this.spy();
+        resource.content().then(function (content) {
+            var result = {data: content, client: clientSpy };
+            runner.emit("coverage:report", result);
+            buster.emit("suite:end", coverageHelpers.combineResults.apply(this, [result]));
+        });
     }
 
 });

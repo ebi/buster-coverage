@@ -16,7 +16,7 @@
     },
     "dependencies": {
         "buster-core": ">=0.6.2",
-        "coverage-helpers": "git://github.com/robgietema/coverage-helpers.git"
+        "coverage-helpers": "~0.1.0"
     }
 }
 

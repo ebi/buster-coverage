@@ -1,3 +1,8 @@
+# Unmaintained
+
+Unfortunately I wasn't able to give buster-coverage the love it deserves if
+you're interested to take this project over please get in contact with me.
+
 # buster-coverage
 
 An extension for [buster.js](http://busterjs.org) to generage lcov files for everything listed in your `source` files. You will need [lcov](http://ltp.sourceforge.net/coverage/lcov.php) or something similar to generate meaningful reports.

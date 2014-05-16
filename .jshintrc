@@ -1,0 +1,20 @@
+{
+    "browser":  true,
+    "devel":    true,
+    "bitwise":  true,
+    "curly":    false,
+    "eqeqeq":   true,
+    "forin":    true,
+    "immed":    true,
+    "latedef":  true,
+    "newcap":   true,
+    "noarg":    true,
+    "noempty":  true,
+    "nonew":    true,
+    "regexp":   true,
+    "undef":    true,
+    "strict":   false,
+    "trailing": true,
+    "node":     true,
+    "predef": ["assert", "refute", "done"]
+}
